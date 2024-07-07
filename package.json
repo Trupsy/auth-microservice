@@ -1,0 +1,17 @@
+{
+  "type": "module",
+  "name": "auth-microservice",
+  "scripts": {
+    "build": "tsc",
+    "start": "node --loader ts-node/esm ./src/index.ts",
+    "dev": "nodemon --exec ts-node --loader ts-node/esm ./src/index.ts"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "ts-node": "^10.9.2"
+  }
+}

@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  auth-microservice:
+    image: auth-microservice
+    deploy:
+      mode: replicated
+      replicas: 10
+      restart_policy:
+        # restart on close any
+        condition: any
+    # open ports for ingress docker service
+    ports:
+      - "8090:80"
+    depends_on:
+      - database
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@database:5646/auth_db
+  database:
+    image: postgres
+    ports:
+      - "5646:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=auth_db
+    volumes:
+      - auth-db:/var/lib/postgresql/data
+    # only for manager node
+    deploy:
+      mode: replicated
+      replicas: 1
+      restart_policy:
+        condition: any
+      placement:
+        constraints:
+          - node.role == manager
+
+volumes:
+  auth-db: { driver: local }
