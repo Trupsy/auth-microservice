@@ -1,17 +1,34 @@
 {
-  "type": "module",
+  "type": "commonjs",
   "name": "auth-microservice",
   "scripts": {
+    "devcontainer.build": "docker compose -f docker-compose-dev.yml build",
+    "devcontainer.up": "docker compose -f docker-compose-dev.yml up",
+    "devcontainer.down": "docker compose -f docker-compose-dev.yml down",
+    "prod.build": "sh ./scripts/build.sh",
+    "prod.up": "docker compose up -d",
+    "prod.down": "docker compose down",
     "build": "tsc",
-    "start": "node --loader ts-node/esm ./src/index.ts",
-    "dev": "nodemon --exec ts-node --loader ts-node/esm ./src/index.ts"
+    "start": "cd dist && node index.js",
+    "dev": "nodemon --exec npm run craft",
+    "craft": "npm run build && cd dist && node index"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/express": "^4.17.21",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.6",
     "typescript": "^5.5.3"
   },
   "dependencies": {
+    "@prisma/client": "^5.16.1",
+    "bcrypt": "^5.1.1",
     "express": "^4.19.2",
-    "ts-node": "^10.9.2"
+    "nodemon": "^3.1.4",
+    "prisma": "^5.16.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0"
   }
 }

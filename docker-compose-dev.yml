@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  auth-microservice-dev:
+    image: auth-microservice-dev
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/app-dev
+    depends_on:
+      - database
+    environment:
+      - DATABASE_URL=postgres://postgres:postgres@database:5432/auth_db
+  database:
+    image: postgres
+    ports:
+      - "5646:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=auth_db
+    volumes:
+      - ./devcontainer/db:/var/lib/postgresql/data
