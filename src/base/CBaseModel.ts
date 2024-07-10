@@ -8,7 +8,7 @@ export class CBaseModel {
   }
 
   // blank save data function for above snippet (script will be overried the function)
-
+ 
   
   private _create: Function = () => {
     if (!this.prismaModel) {
